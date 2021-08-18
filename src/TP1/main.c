@@ -33,15 +33,16 @@ int main() {
 
     int longitud= sizeof(*archivo);
 
-    texto= malloc(longitud);
+    texto= (char*)malloc(sizeof (char )*longitud);
     fgets(texto,longitud,archivo);
     fclose(archivo);
+    texto=realloc(texto, sizeof(char)*strlen(texto));
 
     strupr(texto);
     puts(texto);
     free(texto);
 
-    puts("\n\n");
+    puts("\n");
     puts("Punto3:");
 
     Lista lista;
@@ -58,5 +59,3 @@ int main() {
 
     return 0;
 }
-
-
