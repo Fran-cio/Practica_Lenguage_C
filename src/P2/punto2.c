@@ -2,14 +2,7 @@
 #include<stdio.h>
 #include<ctype.h>
 
-void strupr ( char *texto )
-{
-    while( *texto )
-    {
-        *texto=toupper( *texto );
-        texto++;
-    }
-}
+void strupr ( char *texto );
 
 int main(){
     char *texto;
@@ -26,4 +19,13 @@ int main(){
     strupr(texto);
     puts(texto);
     free(texto);
+}
+
+void strupr ( char *texto )
+{
+    while( *texto )
+    {
+        *texto=toupper( *texto );
+        texto++;
+    }
 }
