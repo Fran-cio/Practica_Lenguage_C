@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "struct.h"
-#include "function.h"
+#include "function.h" 
 
 int main() {
     puts("Punto 1:");
