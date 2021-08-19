@@ -14,8 +14,9 @@ void deKbaMb(int *numero){
     *numero/=1024;
 }
 
-void iii(char *Cpu,char *Cores,char *Thread){
-    char temp[12];
+void iii(char *Cpu,int *Cores,int *Thread){
+    char temp[13];
+    char cores[3],thread[3];
 
     char palabra[64];
     FILE *archivo;
@@ -23,39 +24,46 @@ void iii(char *Cpu,char *Cores,char *Thread){
     do{
         int j=0;
         fgets(palabra,64,archivo);
-        for(int i=0; i<12;i++){
+        for(int i=0; i<13;i++){
             temp[i]='\000';
         }
         for(int i=0; palabra[i]!=':';i++){
             temp[i]=palabra[i];
             j=i;
         }
-        if(!strcmp(temp,"model name\t")){
+        j++;
+        temp[j]=palabra[j];
+        j++;
+        if(!strcmp(temp,"model name\t:")){
             while (palabra[j]!='\n'){
                 *Cpu=palabra[j];
                 j++;
                 Cpu++;
             };
         }
-        else if(!strcmp(temp,"siblings\t")){
+        else if(!strcmp(temp,"siblings\t:")){
+            int i=0;
             while (palabra[j]!='\n'){
-                *Cores=palabra[j];
+                thread[i]=palabra[j];
                 j++;
-                Cores++;
+                i++;
             };
         }
-        else if(!strcmp(temp,"cpu cores\t")){
+        else if(!strcmp(temp,"cpu cores\t:")){
+            int i=0;
             while (palabra[j]!='\n'){
-                *Thread=palabra[j];
+                cores[i]=palabra[j];
                 j++;
-                Thread++;
+                i++;
             };
         }
-        else if(!strcmp(temp,"flags\t\t")){
+        else if(!strcmp(temp,"flags\t\t:")){
             break;
         }
     }while (!feof(archivo));
     fclose(archivo);
+    *Cores= atoi(cores);
+    *Thread= atoi(thread)/(*Cores);
 }
 
 void iYii(int *RAM_total,int *RAM_Libre,int *RAM_disponible, int *SwapOcupada){

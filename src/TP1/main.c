@@ -1,4 +1,4 @@
-#include "function.h" 
+#include "function.h"
 
 int main() {
     puts("Punto 1:");
@@ -9,15 +9,12 @@ int main() {
            ,RAM_disponible,RAM_libre,RAM_total,SwapOcupada);
 
     char *Cpu=malloc(64);
-    char *Cores=malloc(2);
-    char *Thread=malloc(2);
+    int Cores,Thread;
 
-    iii(Cpu,Cores,Thread);
-    printf("\niii.\nCpu%s \nCantidad de cores%s \nCantidad de Threads%s",Cpu,Cores,Thread);
+    iii(Cpu,&Cores,&Thread);
+    printf("\niii.\nCpu:%s \nCantidad de Cores: %d \nCantidad de Threads por Core: %d",Cpu,Cores,Thread);
 
     free(Cpu);
-    free(Cores);
-    free(Thread);
 
     puts("\n\n");
     puts("Punto2:");
