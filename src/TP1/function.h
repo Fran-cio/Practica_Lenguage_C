@@ -13,7 +13,7 @@
 void deKbaMb(int *numero){
     *numero/=1024;
 }
-//apartado i y ii del punto 1. Como se usa el mismo archivo lo hice todo junto aca 
+//apartado i y ii del punto 1. Como se usa el mismo archivo lo hice todo junto aca
 void iYii(int *RAM_total,int *RAM_Libre,int *RAM_disponible, int *SwapOcupada){
     int SwapLibre,SwapTotal,temp;
     char palabra[20];
@@ -21,7 +21,7 @@ void iYii(int *RAM_total,int *RAM_Libre,int *RAM_disponible, int *SwapOcupada){
 
     archivo1 = fopen("/proc/meminfo", "r");
     /* Con scanf aprovechamos que los  datos estan ordenados en patrones regualres
-     * entonces esperamos un string int string y asi filtramos el numero unicamente, 
+     * entonces esperamos un string int string y asi filtramos el numero unicamente,
      * y posterior mentente lo guardamos en la variable*/
     while (fscanf(archivo1, "%s %d %*s", palabra, &temp)) {
         if (!strcmp(palabra, "MemTotal:")) {
@@ -134,47 +134,40 @@ void strupr ( char *texto )
 
 //Punto3
 //Coloca los valores iniciales en los nodos de la lista
+
 void init(Lista *lista){
     lista->head=NULL;
-    lista->tail=malloc(sizeof(struct Nodo));
-    lista->tail->dato=(uintptr_t)NULL;
+}
+
+
+void agregarnodo(nodo **node,int valor){
+    //El mismo concepto que antes pero ahora es un nodo de una pos n
+    if ((*node)==NULL) {
+        nodo temp;
+        temp.dato=valor;
+        temp.siguiente=NULL;
+        (*node)=&temp;
+    }
+    else {
+        //Asi hasta llegar al ultimo nodo
+        agregarnodo(&(*node)->siguiente,valor);
+    }
 }
 
 void add(Lista *lista,int valor){
     /* En el primer dato la head va a ser null, entoces creamos un
-     * nodo temporal, colocamos el dato y lo hacemos apuntar a tail
-     * que ahora es el 2do elemento de la lista*/
+     * nodo temporal, colocamos el dato 
+     */
     if (lista->head==NULL) {
         nodo temp;
         temp.dato=valor;
-        temp.siguiente=lista->tail;
+        temp.siguiente=NULL;
         lista->head=&temp;
-    /* Ya que cuando el 2do dato sea la tail no va tener ningun dato
-     * para que este no quede vacio, agregue este if*/
-    }else if(lista->tail->dato==(uintptr_t)NULL){
-        lista->tail->dato=valor;
     }
-    /* finalmente, cada vez que querramos agregar un valor a la lista,
-     * vamos a crear un nodo el cual se va a transformar en el nuevo tail
-     * no sin previamente, apuntar el nodo del valor ante ultimo*/
     else {
-        nodo *temp= malloc(sizeof(struct Nodo));
-        temp->dato=valor;
-        temp->siguiente=NULL;
-        lista->tail->siguiente=temp;
-        lista->tail=temp;
+        //Ya el resto de datos se agregan mediante la siguiente func recursiva
+        agregarnodo(&lista->head->siguiente,valor);
     }
-}
-//recibe el nodo cabeza y lo recorre hasta el ultimo, imprimiendo su valor
-void imprimirlista(nodo node){
-    do{
-        printf("%d ",node.dato );
-        node=*node.siguiente;
-    }while(node.siguiente!=NULL);
-    /*esto lo agregue porque el while llega hasta el anteultimo valor, entoces
-     *imprimo el ultimo
-    */
-    printf("%d ",node.dato );
 }
 
 #endif

@@ -1,5 +1,7 @@
 #include "function.h"
 
+
+
 int main() {
     puts("Punto 1:");
     int RAM_total, RAM_libre, RAM_disponible,SwapOcupada;
@@ -24,7 +26,7 @@ int main() {
 
     archivo=fopen("/proc/version","r");
 
-    /*guardo en una variable el tamaño del archivo al cual apunta, como el texto 
+    /*guardo en una variable el tamaño del archivo al cual apunta, como el texto
      * posee solo texto, la idea es obtener almenos, la memoria minima necesaria
     */
     int longitud= sizeof(*archivo);
@@ -32,7 +34,7 @@ int main() {
     fgets(texto,longitud,archivo);//con fgets guardo en un string la cadena de caracteres del archivo
     fclose(archivo);
 
-    /*aprovechamos el arreglo dinamico y realocamos la memoria, y colocamos unicamente 
+    /*aprovechamos el arreglo dinamico y realocamos la memoria, y colocamos unicamente
      * el texto que contine.
     */
     texto=realloc(texto, sizeof(char)*strlen(texto));
@@ -46,7 +48,9 @@ int main() {
     /*agrego un conjunto de valores al azar, para verificar que se almacenan al final
      *de la lista es necesario recurrir a revisar al codigo o un debug linea a linea.
      */
+
     Lista lista;
+
     init(&lista);
     add(&lista,1);
     add(&lista,2);
@@ -56,7 +60,11 @@ int main() {
     add(&lista,6);
     add(&lista,67);
 
-    imprimirlista(*lista.head);
+    //Se implemento asi y no de otra forma para dejar en evidencia el enlace
+    printf("%d %d %d %d %d %d %d",lista.head->dato,lista.head->siguiente->dato,lista.head->siguiente->siguiente->dato
+           ,lista.head->siguiente->siguiente->siguiente->dato,lista.head->siguiente->siguiente->siguiente->siguiente->dato
+           ,lista.head->siguiente->siguiente->siguiente->siguiente->siguiente->dato
+           ,lista.head->siguiente->siguiente->siguiente->siguiente->siguiente->siguiente->dato);
 
     return 0;
 }
