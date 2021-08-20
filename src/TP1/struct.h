@@ -8,7 +8,6 @@ typedef struct Nodo{
 
 typedef struct{
     nodo *head;
-    nodo *tail;
 }Lista;
 
 #endif
