@@ -9,10 +9,11 @@ int main()
                 .x = 15,
                 .y = 65535,
                 .c = 128,
+                //Nota: Aca se iguala a -1 un unsigned
                 .z = -1, 
                 .d = {1,1,1}
     };
-
+	
     /* Explique a que se debe los tamanios de cada una de las estructuras */
     printf("base     struct size  %lu \n", sizeof(BaseData));
     printf("reorder  struct size  %lu \n", sizeof(ReorderData));
