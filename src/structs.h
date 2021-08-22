@@ -6,7 +6,7 @@ typedef struct {
     char b;
     int  x;
     unsigned short int y;
-    char c;
+    unsigned char c;
     unsigned short int z;
     char d[3];
 } BaseData;
