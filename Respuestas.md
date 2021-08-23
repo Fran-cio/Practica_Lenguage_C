@@ -45,10 +45,10 @@
     		int  x;//4.4				int  x;//4.4
     		unsigned short int y;		 	unsigned short int y;
     		char c;//3.4				unsigned short int z;//4.4
-    		unsigned short int z;//2.4		char c;
+    		unsigned short int z//2.4;		char c;
     		char d[3];//3.4			char d[3];//4.4
 	} BaseData;				} ReorderData;
-	
+	//Aviso: Al parecer el short int y el arreglo se acomodan de tal forma que se ocupan los 2 espacios libres y se dejan 3 libres al final. Eso se ve en el print del for.
 	typedef struct {
     		long unsigned int ll;//8.8
     		char a;
@@ -82,7 +82,8 @@
 	de la estructura data del tamaño de un char y que va moviendose de byte a byte imprimiendo
 	el valor contenido, en el formato %02hhx, es decir, con los valores
 	a la derecha de la coma de ancho 0 y a la izquierda de ancho 2, hh para pasar de char
-	a entero imprimible y x para expresarlo en hexa sin signo.
+	a entero imprimible y x para expresarlo en hexa sin signo. Tambien se visualiza el padding
+	y como algunos espacios de memorias muestran contenido residual de la memoria.
 	
 	
  
