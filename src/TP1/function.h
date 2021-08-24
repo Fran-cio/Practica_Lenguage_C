@@ -20,9 +20,11 @@ void iYii(int *RAM_total,int *RAM_Libre,int *RAM_disponible, int *SwapOcupada){
     FILE *archivo1;
 
     archivo1 = fopen("/proc/meminfo", "r");
-    /* Con scanf aprovechamos que los  datos estan ordenados en patrones regualres
+    /*
+     * Con scanf aprovechamos que los  datos estan ordenados en patrones regualres
      * entonces esperamos un string int string y asi filtramos el numero unicamente,
-     * y posterior mentente lo guardamos en la variable*/
+     * y posterior mentente lo guardamos en la variable
+     */
     while (fscanf(archivo1, "%s %d %*s", palabra, &temp)) {
         if (!strcmp(palabra, "MemTotal:")) {
             *RAM_total=temp;
@@ -38,7 +40,8 @@ void iYii(int *RAM_total,int *RAM_Libre,int *RAM_disponible, int *SwapOcupada){
         }
         else if (!strcmp(palabra, "SwapFree:")) {
             SwapLibre=temp;
-            /*esta es una decision poco escalable ya que aprovechamos que de entrada
+            /*
+             * Esta es una decision poco escalable ya que aprovechamos que de entrada
              *sabemos la distribucion de los datos en el texto.
             */
             break;
@@ -64,10 +67,11 @@ void iii(char *Cpu,int *Cores,int *Thread){
     do{
         int j=0;
         fgets(palabra,64,archivo);
-        /*Setea todos los espacios de temp como el
-        * caracter de vacio para evitar que de ciclo a ciclo se
-        * acumulen caracteres previos.
-        */
+        /*
+         * Setea todos los espacios de temp como el
+         * caracter de vacio para evitar que de ciclo a ciclo se
+         * acumulen caracteres previos.
+         */
         for(int i=0; i<13;i++){
             temp[i]='\000';
         }
@@ -80,7 +84,8 @@ void iii(char *Cpu,int *Cores,int *Thread){
         //se agrega el : para facilitar el paso a int
         temp[j]=palabra[j];
         j++;
-        /*apartir de aca discriminamos los datos que no sean de interes
+        /*
+         *apartir de aca discriminamos los datos que no sean de interes
          *ya que en la variable temp, se acumulan los nombres de estos datos
          *y en el resto del arreglo palabra, el dato.
          */
@@ -108,10 +113,11 @@ void iii(char *Cpu,int *Cores,int *Thread){
                 i++;
             };
         }
-        /* Para no recorrer todo el archivo de manera inncesaria
+        /*
+         * Para no recorrer todo el archivo de manera inncesaria
          * se espera a detectar flags, siendo el ultimo de la lista
          * de valores de interes, hace un break para dejar de leer.
-         * */
+         */
         else if(!strcmp(temp,"flags\t\t:")){
             break;
         }
@@ -130,6 +136,57 @@ void strupr ( char *texto )
         *texto=toupper( *texto );
         texto++;
     }
+}
+
+void punto2(char ***texto,int *cantpalabras){
+    FILE *archivo;
+    char *temp;
+    archivo=fopen("/proc/version","r");
+
+    /*
+     * guardo en una variable el tamaño del archivo al cual apunta, como el texto
+     * posee solo texto, la idea es obtener almenos, la memoria minima necesaria
+    */
+    int longitud= sizeof(*archivo);
+    temp= (char*)malloc(sizeof (char )*longitud);
+    fgets(temp,longitud,archivo);//con fgets guardo en un string la cadena de caracteres del archivo
+    fclose(archivo);
+
+    /*
+     * aprovechamos el arreglo dinamico y realocamos la memoria, y colocamos unicamente
+     * el texto que contine.
+    */
+    temp=realloc(temp, sizeof(char)*strlen(temp));
+    strupr(temp);//Esto me sorprendio, tuve que implemetar el metodo strupr, hubiera jurado que estaba en la lib strings.h
+
+    /*
+     * Esta funcion "tokeniza" el string en espacios segun el char que le pases
+     * en este caso separamos cuando aparece un espacio
+     */
+    temp = strtok(temp, " ");
+
+    int i=0;
+
+    while( temp != NULL ) {
+        /*
+         * Este realloc va generando alocacion de memoria en base a medida que agregamos palabras
+         */
+        if(i!=0){
+            (*texto)=(char**) realloc(*texto,sizeof(char*)*(i+1));
+        }
+        (*texto)[i]=temp;
+        i++;
+        /*
+         * Cuando pasamos como parametro NULL va pasando de token a token
+         */
+        temp = strtok(NULL, " ");
+    }
+    //Referencia: https://www.tutorialspoint.com/c_standard_library/c_function_strtok.htm
+
+    /*
+     * Genero un contador para posteriormente hacer el for()
+     */
+    *cantpalabras=i;
 }
 
 //Punto3
@@ -156,7 +213,7 @@ void agregarnodo(nodo **node,int valor){
 
 void add(Lista *lista,int valor){
     /* En el primer dato la head va a ser null, entoces creamos un
-     * nodo temporal, colocamos el dato 
+     * nodo temporal, colocamos el dato
      */
     if (lista->head==NULL) {
         nodo temp;

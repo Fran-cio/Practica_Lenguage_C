@@ -19,34 +19,26 @@ int main() {
     free(Cpu);
 
     puts("\n\n");
-    puts("Punto2:");
+    puts("Punto 2:");
 
-    char *texto;
-    FILE *archivo;
+    char **texto;
+    texto=(char**) malloc(sizeof(char*));
+    int cantpalabras=0;
 
-    archivo=fopen("/proc/version","r");
+    punto2(&texto,&cantpalabras);
 
-    /*guardo en una variable el tamaño del archivo al cual apunta, como el texto
-     * posee solo texto, la idea es obtener almenos, la memoria minima necesaria
-    */
-    int longitud= sizeof(*archivo);
-    texto= (char*)malloc(sizeof (char )*longitud);
-    fgets(texto,longitud,archivo);//con fgets guardo en un string la cadena de caracteres del archivo
-    fclose(archivo);
+    for(int i=0;i<cantpalabras ; i++)
+    {
+        puts(texto[i]);
+    }
 
-    /*aprovechamos el arreglo dinamico y realocamos la memoria, y colocamos unicamente
-     * el texto que contine.
-    */
-    texto=realloc(texto, sizeof(char)*strlen(texto));
-    strupr(texto);//Esto me sorprendio, tuve que implemetar el metodo strupr, hubiera jurado que estaba en la lib strings.h
-    puts(texto);
     free(texto);//libero memoria
 
-    puts("\n");
-    puts("Punto3:");
+    puts("Punto 3:");
 
-    /*agrego un conjunto de valores al azar, para verificar que se almacenan al final
-     *de la lista es necesario recurrir a revisar al codigo o un debug linea a linea.
+    /*
+     * Agrego un conjunto de valores al azar, para verificar que se almacenan al final
+     * de la lista es necesario recurrir a revisar al codigo o un debug linea a linea.
      */
 
     Lista lista;
