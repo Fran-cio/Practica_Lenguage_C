@@ -1,7 +1,7 @@
-#include "function.h"
+#include "./headers/function.h"
 
 
-
+ 
 int main() {
     puts("Punto 1:");
     int RAM_total, RAM_libre, RAM_disponible,SwapOcupada;
